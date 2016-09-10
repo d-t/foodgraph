@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 import sys
 
 
@@ -123,6 +124,7 @@ def write_ingredients_network(args):
     n_args = len(args)
 
     # Load dataset
+    print "Loading dataset"
     if n_args > 0:
         dataset_path = args[0]
         if dataset_path is not None:
@@ -130,11 +132,13 @@ def write_ingredients_network(args):
                 recipes_json = json.load(f)
 
     # Get recipes list, sorted by id
+    print "Processing recipes"
     recipes_list = get_recipes_list(recipes_json)
     recipes_list = sorted(recipes_list, key=lambda x:x[0])
     n_recipes = len(recipes_list)  # 39774
 
     # Get ingredients list, sorted by id
+    print "Processing ingredients"
     ingredients_list = get_ingredients_list(recipes_json)
     ingredients_list = sorted(ingredients_list, key=lambda x:x[0])
     n_ingredients = len(ingredients_list)  # 6714
@@ -153,18 +157,26 @@ def write_ingredients_network(args):
     ing_ingredients = get_ing_ingredients(ing_recipes, rec_ingredients)
 
     # Write to file
+    "Writing to file"
     if n_args > 1:
         ingredients_network_filepath = args[1]
-        ingredients_id_names_filepath = args[2]
+        ingredients_id_name_filepath = args[2]
+        ingredients_name_id_filepath = args[3]
     else:
-        ingredients_network_filepath = 'ingredients_network.json'
-        ingredients_id_names_filepath = 'ingredients_names.json'
+        output_folderpath = os.path.join(os.path.dirname(__file__), '../output')
+        ingredients_network_filepath = os.path.join(output_folderpath, 'ingredients_network.json')
+        ingredients_id_name_filepath = os.path.join(output_folderpath, 'ingredients_id_name.json')
+        ingredients_name_id_filepath = os.path.join(output_folderpath, 'ingredients_name_id.json')
+
     # Write ingredients network to file
     with open(ingredients_network_filepath, 'wb+') as f:
         json.dump(ing_ingredients, f)
     # Write associations between ingredients id and name to file
-    with open(ingredients_id_names_filepath, 'wb+') as f:
-        json.dum(ings_id_name, f)
+    with open(ingredients_id_name_filepath, 'wb+') as f:
+        json.dump(ings_id_name, f)
+    # Write associations between ingredients name and id to file
+    with open(ingredients_name_id_filepath, 'wb+') as f:
+        json.dump(ings_name_id, f)
 
 
 if __name__ == '__main__':
