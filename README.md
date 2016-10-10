@@ -21,7 +21,7 @@ The arguments are:
   2. path to the output nodes' file
   3. path to the output edges' file
   
-The output files should have 6715 (nodes) and 479922 (edges) rows.
+The output files contain 6715 (nodes) and 479922 (edges) rows.
 
 
 ## Graph Visualization and Analysis
