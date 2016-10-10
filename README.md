@@ -1,8 +1,30 @@
 # foodgraph
+This project analyzes the [food recipes' dataset provided by Kaggle](https://www.kaggle.com/c/whats-cooking).
 
-## TODO
-  - Add code to create Gephi files
-  - Add Gephi folder with files and visualizations
-  - Create exploration (ingredient -> random ingredients -> etc)
-  - Add sigma.js
-  - Come up with a better name :)
+
+## Data Processing
+The input json file containing recipes and ingredients is loaded and processed. The complete list of ingredients is extracted from the recipes, then connections between ingredients contained in same recipes are found.  
+  
+Weights between connections are computed using a **"term frequency-inverse document frequency"** approach: a high number of recipes in common between ingredients results in a high weight score; conversely, if a single ingredient is associated with a high number of recipes, then the weight decreases.  
+  
+Finally, a graph is created using the above information. Each *node* of the graph represents an ingredient. Nodes are connected through an *edge* if they share recipes. The weight of each edge is calculated using the *tf-idf* method indicated.  
+  
+The analysis process was implemented in Python, the code being in the *src* folder. It can be executed using the Terminal command line:
+
+```Shell
+cd src/
+python foodgraph.py ../dataset/kaggle_recipes.json ../output/nodes.csv ../output/edges.csv
+```  
+  
+The arguments are:
+  - path to the input json file
+  - path to the output nodes' file
+  - path to the output edges' file
+  
+The output files should have 6715 (nodes) and 479922 (edges) rows.
+
+
+## Graph Visualization and Analysis
+The output files can be used to visualize the graph and analyze the information. [*Gephi*](http://gephi.org/) is the tool used in this case.  
+  
+![Graph Visualization](foodgraph.png)
