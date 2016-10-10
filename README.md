@@ -17,9 +17,9 @@ python foodgraph.py ../dataset/kaggle_recipes.json ../output/nodes.csv ../output
 ```  
   
 The arguments are:
-  - path to the input json file
-  - path to the output nodes' file
-  - path to the output edges' file
+  1. path to the input json file
+  2. path to the output nodes' file
+  3. path to the output edges' file
   
 The output files should have 6715 (nodes) and 479922 (edges) rows.
 
@@ -27,4 +27,16 @@ The output files should have 6715 (nodes) and 479922 (edges) rows.
 ## Graph Visualization and Analysis
 The output files can be used to visualize the graph and analyze the information. [*Gephi*](http://gephi.org/) is the tool used in this case.  
   
-![Graph Visualization](foodgraph.png)
+![Graph Visualization](foodgraph.png)  
+  
+Some notes regarding the final output:
+  - Ingredients included in less than 430 recipes (out of 39774) were removed from the graph
+  - The size of each node is proportional to the number of recipes associated to it
+  - Nodes' positions were defined using the Force Atlas algorithm, according to which nodes with higher weights and shared connections get closer to each other
+  
+A community-detection algorithm uncovered 5 clusters within the whole network. Each of them was assigned a specific color, can be located in a precise area of the plot and approximately linked to a culinary theme:
+  1. green, South-West, desserts
+  2. pink, North-West, Italian/Mediterranean
+  3. blue, North-East, Mexican/Latin
+  4. red, East, Indian
+  5. purple, South-East, Asian
